@@ -1,98 +1,119 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+const albumCover = "https://images.genius.com/c6619186e8f93ff5c7ce61912e08d9c0.1000x1000x1.png";
+const artistPhoto = "https://i.scdn.co/image/ab6761610000e5eb4293385d324db8558179afd9";
+const tracks = ["Make Them Cry","Dust","Whisper My Name","Janice STFU","Ran To Atlanta","Make Them Pay"];
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+//Krisha
+export default function Index() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.backButton}>‹</Text>
+        <Image source={{ uri: albumCover }} style={styles.albumImage} />
+        <Text style={styles.title}>ICEMAN</Text>
+        <View style={styles.artistRow}>
+          <Image source={{ uri: artistPhoto }} style={styles.artistImage} />
+          <Text style={styles.artistName}>Drake</Text>
+        </View>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+        <Text style={styles.albumInfo}>Album • May 15 • Latest release</Text>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        {tracks.map((track, index) => (
+          <View key={index} style={styles.trackRow}>
+            <View style={styles.trackTextBox}>
+              <Text style={styles.trackTitle}>{track}</Text>
+              <Text style={styles.trackInfo}>E  Video • Drake</Text>
+            </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+            <Text style={styles.trackMenu}>•••</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#111111",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+
+  content: {
+    paddingTop: 20,
+    paddingHorizontal: 22,
+    paddingBottom: 80,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  backButton: {
+    color: "white",
+    fontSize: 42,
   },
+
+  albumImage: {
+    width: 310,
+    height: 310,
+    alignSelf: "center",
+    marginVertical: 24,
+    borderRadius: 4,
+  },
+
   title: {
-    textAlign: 'center',
+    color: "white",
+    fontSize: 38,
+    fontWeight: "700",
+    marginBottom: 14,
   },
-  code: {
-    textTransform: 'uppercase',
+
+  artistRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  artistImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginRight: 10,
+  },
+
+  artistName: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  albumInfo: {
+    color: "#aaaaaa",
+    fontSize: 15,
+    marginBottom: 32,
+  },
+
+  trackRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 26,
+  },
+
+  trackTextBox: {
+    flex: 1,
+  },
+
+  trackTitle: {
+    color: "white",
+    fontSize: 20,
+    marginBottom: 6,
+  },
+
+  trackInfo: {
+    color: "#aaaaaa",
+    fontSize: 15,
+  },
+
+  trackMenu: {
+    color: "#aaaaaa",
+    fontSize: 22,
   },
 });

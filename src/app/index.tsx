@@ -1,4 +1,6 @@
 import {Button, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,} from "react-native";
+import MiniPlayer from "../components/MiniPlayer";
+import BottomNav from "../components/BottomNav";
 
 const albumCover = "https://images.genius.com/c6619186e8f93ff5c7ce61912e08d9c0.1000x1000x1.png";
 const artistPhoto = "https://i.scdn.co/image/ab6761610000e5eb4293385d324db8558179afd9";
@@ -56,6 +58,8 @@ export default function Index() {
             }}
           />
         </View>
+      <MiniPlayer />
+      <BottomNav />
     </View>
   );
 }
